@@ -12,11 +12,11 @@ import javax.persistence.*;
 })
 public class CustomerOrder {
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private double total;
 	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Customer customer;
 	
 	
@@ -73,17 +73,21 @@ public class CustomerOrder {
 	public String toString()
 	{
 		StringBuilder stringBuilder = new StringBuilder();
-		
+		total = 0;
 		stringBuilder.append("Customer Order For ");
-		stringBuilder.append(this.getCustomer().getName());
+		stringBuilder.append(this.customer.getName());
 		stringBuilder.append("\n");
 		stringBuilder.append("Customers Products:");
 		stringBuilder.append("\n");
 		for (Product product : products) 
 		{
+			total += product.getPrice();
 			stringBuilder.append("     " + product.toString());
 			
 		}
+		stringBuilder.append("\n\n");
+		stringBuilder.append("Total Price: ");
+		stringBuilder.append(total);		
 		return stringBuilder.toString();
 		
 	}

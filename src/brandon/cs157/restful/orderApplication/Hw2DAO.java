@@ -47,10 +47,13 @@ public class Hw2DAO implements DAO {
 	public List<CustomerOrder> getCustomerOrders() {
 		Session session = sessionFactory.openSession();
 		
+		
 		Query query;
         query = session.getNamedQuery("CustomerOrder.retrieveAllOrders");
         List<CustomerOrder> customerOrders = query.list();
+        
         session.close();
+		
 		
         return customerOrders;
 	}

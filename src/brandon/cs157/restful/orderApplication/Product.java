@@ -14,13 +14,12 @@ import javax.persistence.ManyToOne;
 public class Product {
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String name;
 	private double price;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	
+	@ManyToOne(fetch = FetchType.EAGER)
 	private CustomerOrder customerOrder;
 
 	public int getId() {
@@ -61,9 +60,9 @@ public class Product {
 		
 		stringBuilder.append("     Product Name: ");
 		stringBuilder.append(this.getName());
-		stringBuilder.append("\n");
-		stringBuilder.append("     Product Price: ");
+		stringBuilder.append(" : ");
 		stringBuilder.append(this.getPrice());
+		stringBuilder.append("\n");
 		
 		return stringBuilder.toString();
 	}

@@ -15,15 +15,6 @@ public class Restful
 		return "Hellow from Restful.java";
 	}
 	
-	@Path("/test")
-	@GET
-	@Produces(MediaType.TEXT_PLAIN)
-	public String returnTrue()
-	{
-		orderEntryService.test();
-		return "Done";
-	}
-	
 	@Path("/orders")
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)

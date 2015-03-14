@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Customer {
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
 	private String name;
@@ -29,8 +29,8 @@ public class Customer {
 	public CustomerOrder getOrder() {
 		return order;
 	}
-	public void setOrder(CustomerOrder order) {
-		this.order = order;
+	public void setOrder(CustomerOrder customerOrder) {
+		this.order = customerOrder;
 	}
 	
 }
