@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<!-- Brandon Rossi --> 
+<!-- CS 157B -->
+<!-- Spring 2015 -->
+<!-- Assignment 1 -->
+<hibernate-configuration>
+    <session-factory>
+        <!-- Database connection settings -->
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/OrderApplication</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">b021987</property>
+        
+        <!-- JDBC connection pool (use the built-in) -->
+        <property name="connection.pool_size">1</property>
+        
+        <!-- SQL dialect -->
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!-- Disable the second-level cache  -->
+        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+        
+        <!-- Echo all executed SQL to stdout -->
+        <property name="show_sql">true</property>
+
+        <!-- Drop the existing tables and create new one -->
+        <property name="hbm2ddl.auto">create</property>
+ 
+        <!-- Mention here all the model classes along with their package name -->
+        
+        <mapping class="brandon.cs157.restful.orderApplication.Customer"/>
+        <mapping class="brandon.cs157.restful.orderApplication.Product"/>
+        <mapping class="brandon.cs157.restful.orderApplication.CustomerOrder"/>
+    
+    </session-factory>
+</hibernate-configuration>
+
