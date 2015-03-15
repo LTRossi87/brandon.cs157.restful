@@ -59,34 +59,93 @@ public class Hw2DAO implements DAO {
 	}
 
 	@Override
-	public List<CustomerOrder> getCustomerOrdersById(int customerOrderId) {
-		// TODO Auto-generated method stub
-		return null;
+	public CustomerOrder getCustomerOrdersById(int customerOrderId) {
+		
+		Session session = sessionFactory.openSession();
+		
+		Query query;
+        query = session.getNamedQuery("CustomerOrder.retrieveOrderById");
+        query.setInteger("id", customerOrderId);
+        CustomerOrder customerOrders = (CustomerOrder) query.uniqueResult();
+        
+        session.close();
+		
+        return customerOrders;
 	}
-
+	
+	@Override
+	public void updateCustomerOrder(int customerOrderId, Product product)
+	{
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		
+		CustomerOrder customerOrder = this.getCustomerOrdersById(customerOrderId);
+		customerOrder.purchaseProduct(product);
+		
+		session.getTransaction().commit();
+		session.close();
+		
+	}
+	
 	@Override
 	public List<Product> getProducts() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = sessionFactory.openSession();
+		
+		Query query;
+        query = session.getNamedQuery("Product.retrieveAllProducts");
+        List<Product> products = query.list();
+        
+        session.close();
+		
+        return products;
 	}
 
 	@Override
 	public List<Customer> getCustomers() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = sessionFactory.openSession();
+		
+		Query query;
+        query = session.getNamedQuery("Customer.retrieveAllCustomers");
+        List<Customer> products = query.list();
+        
+        session.close();
+		
+        return products;
 	}
 
 	@Override
-	public void updateProductPrice(int productId) {
-		// TODO Auto-generated method stub
-		
+	public void updateProductPrice(int productId, double price) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Query query;
+        query = session.getNamedQuery("Product.retrieveProductById");
+        query.setInteger("id", productId);
+        Product customerOrders = (Product) query.uniqueResult();
+        
+        customerOrders.setPrice(price);
+        
+        session.getTransaction().commit();
+        session.close();
 	}
 
 	@Override
-	public void deleteOrders(int customerOrders) {
-		// TODO Auto-generated method stub
+	public void deleteOrders(int customerOrderId) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		CustomerOrder customerOrder = this.getCustomerOrdersById(customerOrderId);
+		for (Product product : customerOrder.getProducts()) 
+		{
+			product.setCustomerOrder(null);
+		}
+		customerOrder.getCustomer().setOrder(null);
+		
+		session.delete(customerOrder);
+		
+		session.getTransaction().commit();
+		session.close();
 		
 	}
+	
 
 	@Override
 	public void closeSessionFactory() {

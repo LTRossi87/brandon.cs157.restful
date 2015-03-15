@@ -8,9 +8,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 
 @Entity
+@NamedQueries({
+    @NamedQuery(name="Product.retrieveAllProducts", query="from Product"),
+    @NamedQuery(name="Product.retrieveProductById", query="from Product where id = :id")
+})
 public class Product {
 
 	@Id
@@ -54,7 +60,7 @@ public class Product {
 		this.customerOrder = customerOrder;
 	}
 	
-	public String toString()
+	public String toStringForCustomerOrders()
 	{
 		StringBuilder stringBuilder = new StringBuilder();
 		
@@ -63,6 +69,19 @@ public class Product {
 		stringBuilder.append(" : ");
 		stringBuilder.append(this.getPrice());
 		stringBuilder.append("\n");
+		
+		return stringBuilder.toString();
+	}
+	
+	public String toString()
+	{
+		StringBuilder stringBuilder = new StringBuilder();
+		
+		stringBuilder.append("Product Name");
+		stringBuilder.append("\n");
+		stringBuilder.append(this.getName());
+		stringBuilder.append(" : ");
+		stringBuilder.append(this.getPrice());
 		
 		return stringBuilder.toString();
 	}

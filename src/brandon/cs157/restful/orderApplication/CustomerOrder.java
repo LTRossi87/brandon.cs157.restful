@@ -16,16 +16,17 @@ public class CustomerOrder {
 	private int id;
 	private double total;
 	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER)
 	private Customer customer;
 	
 	
-	@OneToMany(mappedBy = "customerOrder", targetEntity = Product.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = Product.class, fetch = FetchType.EAGER)
 	private List<Product> products;
 	
 	public CustomerOrder()
 	{
 		products = new ArrayList<Product>();
+		total = 0;
 	}
 	
 	public int getId() {
@@ -62,6 +63,7 @@ public class CustomerOrder {
 
 	public void purchaseProduct(Product product)
 	{
+		total += product.getPrice();
 		products.add(product);
 	}
 	
@@ -73,21 +75,28 @@ public class CustomerOrder {
 	public String toString()
 	{
 		StringBuilder stringBuilder = new StringBuilder();
-		total = 0;
 		stringBuilder.append("Customer Order For ");
 		stringBuilder.append(this.customer.getName());
 		stringBuilder.append("\n");
 		stringBuilder.append("Customers Products:");
 		stringBuilder.append("\n");
-		for (Product product : products) 
+		if(!products.isEmpty())
 		{
-			total += product.getPrice();
-			stringBuilder.append("     " + product.toString());
-			
+			for (Product product : products) 
+			{
+				stringBuilder.append("     " + product.toStringForCustomerOrders());
+				
+			}
 		}
-		stringBuilder.append("\n\n");
+		else
+		{
+			stringBuilder.append("     Customer Has No Products In Their Order");
+		}
+		
+		stringBuilder.append("\n");
 		stringBuilder.append("Total Price: ");
-		stringBuilder.append(total);		
+		stringBuilder.append(total);
+		stringBuilder.append("\n");
 		return stringBuilder.toString();
 		
 	}

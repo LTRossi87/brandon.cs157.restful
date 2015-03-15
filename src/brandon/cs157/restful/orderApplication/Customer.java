@@ -3,6 +3,9 @@ package brandon.cs157.restful.orderApplication;
 import javax.persistence.*;
 
 @Entity
+@NamedQueries({
+    @NamedQuery(name="Customer.retrieveAllCustomers", query="from Customer")
+})
 public class Customer {
 
 	@Id
@@ -31,6 +34,18 @@ public class Customer {
 	}
 	public void setOrder(CustomerOrder customerOrder) {
 		this.order = customerOrder;
+	}
+	
+	public String toString()
+	{
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("Customer Name:");
+		stringBuilder.append(this.name);
+		stringBuilder.append("\n");
+		stringBuilder.append("  Customer ID: ");
+		stringBuilder.append(this.id);
+		stringBuilder.append("\n");
+		return stringBuilder.toString();
 	}
 	
 }

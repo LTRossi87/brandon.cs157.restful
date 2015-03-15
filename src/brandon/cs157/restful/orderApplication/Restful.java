@@ -7,12 +7,16 @@ import javax.ws.rs.core.MediaType;
 public class Restful 
 {
 	OrderEntryService orderEntryService = new OrderEntryService();
-	@Path("/title")
-	@GET
+	
+	@Path("/customer/{customerName}")
+	@POST
 	@Produces(MediaType.TEXT_PLAIN)
-	public String returnTitle()
+	public String createNewCustomer(@PathParam("customerName") String customerName)
 	{
-		return "Hellow from Restful.java";
+		
+		orderEntryService.addCustomer(customerName);
+		return "You Have Been Added TO The Store Database";
+		 
 	}
 	
 	@Path("/orders")
