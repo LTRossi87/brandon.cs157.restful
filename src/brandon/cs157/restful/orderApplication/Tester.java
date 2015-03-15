@@ -5,7 +5,7 @@ import java.util.List;
 public class Tester {
 
 	public static void main(String[] args) {
-		
+		/*
 		Hw2DAO hw2dao = new Hw2DAO();
 		
 		
@@ -13,7 +13,7 @@ public class Tester {
 		Product product = new Product();
 		Product product2 = new Product();
 		Customer customer = new Customer();
-		CustomerOrder customerOrder = new CustomerOrder();
+		//CustomerOrder customerOrder = new CustomerOrder();
 		
 		product.setName("Dog");
 		product.setPrice(25.0);
@@ -165,7 +165,7 @@ public class Tester {
 		
 		
 		hw2dao.closeSessionFactory();
-		
+		*/
 	}
 
 }

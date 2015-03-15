@@ -112,6 +112,19 @@ public class Hw2DAO implements DAO {
 		
         return products;
 	}
+	
+	@Override
+	public Customer getCustomerByNameAndId(String customerName, int customerId)
+	{
+		Session session = sessionFactory.openSession();
+		Query query;
+		query = session.getNamedQuery("Customer.retrieveCustomersByNameAndId");
+		query.setString("name", customerName);
+		query.setInteger("id", customerId);
+		Customer customer = (Customer) query.uniqueResult();
+		session.close();
+		return customer;
+	}
 
 	@Override
 	public void updateProductPrice(int productId, double price) {

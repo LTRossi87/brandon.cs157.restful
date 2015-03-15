@@ -18,6 +18,8 @@ public interface DAO {
 	
 	public List<Customer> getCustomers() throws HibernateException; 
 	
+	public Customer getCustomerByNameAndId(String customerName, int customerId);
+	
 	public void updateProductPrice(int productId, double price) throws HibernateException;
 	
 	public void deleteOrders(int customerOrderId) throws HibernateException;

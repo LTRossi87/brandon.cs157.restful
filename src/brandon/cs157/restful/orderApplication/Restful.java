@@ -70,15 +70,33 @@ public class Restful
 		return stringBuilder.toString();
 	}
 	
+	@Path("/order/{customerName}/{customerId}")
+	@POST
+	@Produces(MediaType.TEXT_PLAIN)
+	public String addOrder(@PathParam("customerName") String customerName, @PathParam("customerId") String customerId)
+	{
+		int id = Integer.parseInt(customerId);
+		Customer customer = hw2dao.getCustomerByNameAndId(customerName, id);
+		CustomerOrder customerOrder = new CustomerOrder();
+		customerOrder.setCustomer(customer);
+		hw2dao.persistObject(customerOrder);
+		
+		return "Order For Customer " + customerName + "Has Been Created";
+	}
 	
-	@Path("/orders")
+	@Path("/order")
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getAllOrders()
 	{
-		List<CustomerOrder> customerOrders = hw2dao.getCustomerOrders();
 		
 		StringBuilder stringBuilder = new StringBuilder();
+		
+		List<CustomerOrder> customerOrders = hw2dao.getCustomerOrders();
+		if(customerOrders.isEmpty())
+		{
+			return "There Are Currently No Customer Orders In The Database";
+		}
 		
 		for (CustomerOrder customerOrder : customerOrders) 
 		{

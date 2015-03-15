@@ -4,7 +4,8 @@ import javax.persistence.*;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name="Customer.retrieveAllCustomers", query="from Customer")
+    @NamedQuery(name="Customer.retrieveAllCustomers", query="from Customer"),
+    @NamedQuery(name="Customer.retrieveCustomersByNameAndId", query="from Customer where name =:name and id = :id"),
 })
 public class Customer {
 
