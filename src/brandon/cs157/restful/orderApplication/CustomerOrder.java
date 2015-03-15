@@ -63,8 +63,9 @@ public class CustomerOrder {
 
 	public void purchaseProduct(Product product)
 	{
-		total += product.getPrice();
+//		total += product.getPrice();
 		products.add(product);
+		total = this.getNewTotalPrice();
 	}
 	
 	public void removeProduct(Product product)
@@ -84,7 +85,8 @@ public class CustomerOrder {
 		stringBuilder.append("\n");
 		if(!products.isEmpty())
 		{
-			System.out.println(products);
+			System.out.println(products);////
+			
 			for (Product product : products) 
 			{
 				stringBuilder.append("     " + product.toStringForCustomerOrders());
@@ -98,10 +100,23 @@ public class CustomerOrder {
 		
 		stringBuilder.append("\n");
 		stringBuilder.append("Total Price: ");
-		stringBuilder.append(total);
+		stringBuilder.append(this.getTotal());
 		stringBuilder.append("\n");
 		return stringBuilder.toString();
 		
+	}
+	
+	public double getNewTotalPrice()
+	{
+		total = 0;
+		
+		for (Product product : products) {
+			System.out.println(product.getName() + " " + product.getPrice());
+			total += product.getPrice();
+		}
+		
+		System.out.println(total);
+		return total;
 	}
 	
 	

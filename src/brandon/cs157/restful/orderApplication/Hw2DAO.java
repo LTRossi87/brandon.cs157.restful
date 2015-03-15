@@ -84,7 +84,6 @@ public class Hw2DAO implements DAO {
 		product.setCustomerOrder(customerOrder);
 		session.update(product);
 		customerOrder.purchaseProduct(product);
-		System.out.println(customerOrder.getProducts().size());
 		session.update(customerOrder);
 		
 		session.getTransaction().commit();
@@ -153,14 +152,34 @@ public class Hw2DAO implements DAO {
 		Query query;
         query = session.getNamedQuery("Product.retrieveProductById");
         query.setInteger("id", productId);
-        Product customerOrders = (Product) query.uniqueResult();
+        Product product = (Product) query.uniqueResult();
         
-        customerOrders.setPrice(price);
+        product.setPrice(price);
+        
+        session.update(product);
+        
         
         session.getTransaction().commit();
         session.close();
 	}
 
+	public void updateCustomerOrderTotal()
+	{
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		
+		List<CustomerOrder> customerOrders = this.getCustomerOrders();
+		
+		for (CustomerOrder customerOrder : customerOrders) {
+			double total = customerOrder.getNewTotalPrice();
+			customerOrder.setTotal(total);
+			session.update(customerOrder);
+		}
+		
+		session.getTransaction().commit();
+        session.close();
+	}
+	
 	@Override
 	public void deleteOrders(int customerOrderId) {
 		Session session = sessionFactory.openSession();
@@ -169,6 +188,7 @@ public class Hw2DAO implements DAO {
 		for (Product product : customerOrder.getProducts()) 
 		{
 			product.setCustomerOrder(null);
+			session.update(product);
 		}
 		customerOrder.getCustomer().setOrder(null);
 		
