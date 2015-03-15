@@ -80,7 +80,12 @@ public class Hw2DAO implements DAO {
 		session.beginTransaction();
 		
 		CustomerOrder customerOrder = this.getCustomerOrdersById(customerOrderId);
+		
+		product.setCustomerOrder(customerOrder);
+		session.update(product);
 		customerOrder.purchaseProduct(product);
+		System.out.println(customerOrder.getProducts().size());
+		session.update(customerOrder);
 		
 		session.getTransaction().commit();
 		session.close();
@@ -98,6 +103,21 @@ public class Hw2DAO implements DAO {
         session.close();
 		
         return products;
+	}
+	
+	@Override
+	public Product getProductById(int productId)
+	{
+		Session session = sessionFactory.openSession();
+		
+		Query query;
+        query = session.getNamedQuery("Product.retrieveProductById");
+        query.setInteger("id", productId);
+        Product product = (Product) query.uniqueResult();
+        
+        session.close();
+		
+        return product;
 	}
 
 	@Override

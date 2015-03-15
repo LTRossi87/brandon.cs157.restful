@@ -14,11 +14,12 @@ public class Restful
 	@Path("/customer/{customerName}")
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
-	public void addCustomer(@PathParam("customerName") String customerName)
+	public String addCustomer(@PathParam("customerName") String customerName)
 	{
 		Customer customer = new Customer();
 		customer.setName(customerName);
 		hw2dao.persistObject(customer);
+		return "Customer " + customerName + " Has Been Added To The Database";
 	}
 	
 	@Path("/customer")
@@ -81,7 +82,22 @@ public class Restful
 		customerOrder.setCustomer(customer);
 		hw2dao.persistObject(customerOrder);
 		
-		return "Order For Customer " + customerName + "Has Been Created";
+		return "Order For Customer " + customerName + " Has Been Created";
+	}
+	
+	@Path("/purchase/{customerOrderId}/{productId}")
+	@POST
+	@Produces(MediaType.TEXT_PLAIN)
+	public String purchaseProduct(@PathParam("customerOrderId")String customerOrderId, @PathParam("productId")String productId)
+	{
+		System.out.println(productId);
+		int product_id = Integer.parseInt(productId);
+		System.out.println(product_id);
+		int customer_order_id = Integer.parseInt(customerOrderId);
+		Product product = hw2dao.getProductById(product_id);
+		hw2dao.updateCustomerOrder(customer_order_id, product);
+		
+		return "Product " + product.getName() + " Has Been Added To Customer Order: " + customerOrderId;
 	}
 	
 	@Path("/order")

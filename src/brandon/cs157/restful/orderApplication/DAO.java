@@ -16,6 +16,8 @@ public interface DAO {
 	
 	public List<Product> getProducts() throws HibernateException;
 	
+	public Product getProductById(int productId);
+	
 	public List<Customer> getCustomers() throws HibernateException; 
 	
 	public Customer getCustomerByNameAndId(String customerName, int customerId);

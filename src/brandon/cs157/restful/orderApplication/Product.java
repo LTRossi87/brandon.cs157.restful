@@ -77,11 +77,14 @@ public class Product {
 	{
 		StringBuilder stringBuilder = new StringBuilder();
 		
-		stringBuilder.append("Product Name");
-		stringBuilder.append("\n");
+		stringBuilder.append("Product Name: ");
 		stringBuilder.append(this.getName());
-		stringBuilder.append(" : ");
+		stringBuilder.append(" : $");
 		stringBuilder.append(this.getPrice());
+		stringBuilder.append(" : ");
+		stringBuilder.append("Product ID: ");
+		stringBuilder.append(this.id);
+		
 		
 		return stringBuilder.toString();
 	}

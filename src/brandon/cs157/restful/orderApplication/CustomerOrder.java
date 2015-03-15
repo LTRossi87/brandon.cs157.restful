@@ -77,11 +77,14 @@ public class CustomerOrder {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("Customer Order For ");
 		stringBuilder.append(this.customer.getName());
+		stringBuilder.append(" Order ID ");
+		stringBuilder.append(this.id);
 		stringBuilder.append("\n");
 		stringBuilder.append("Customers Products:");
 		stringBuilder.append("\n");
 		if(!products.isEmpty())
 		{
+			System.out.println(products);
 			for (Product product : products) 
 			{
 				stringBuilder.append("     " + product.toStringForCustomerOrders());
