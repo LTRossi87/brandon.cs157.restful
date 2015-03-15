@@ -11,8 +11,6 @@ public class Restful
 	
 	private static final Hw2DAO hw2dao = new Hw2DAO();
 	
-	
-	
 	@Path("/customer/{customerName}")
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
@@ -40,6 +38,38 @@ public class Restful
 		}
 		return stringBuilder.toString();
 	}
+	
+	@Path("/product/{productName}/{productPrice}")
+	@POST
+	@Produces(MediaType.TEXT_PLAIN)
+	public String addProduct(@PathParam("productName")String productName, @PathParam("productPrice") String productPrice)
+	{
+		double price = Double.parseDouble(productPrice);
+		Product product = new Product();
+		product.setName(productName);
+		product.setPrice(price);
+		hw2dao.persistObject(product);
+		
+		return "Product: " + productName + " For $" + productPrice +"Has Been Added To The Database";
+	}
+	
+	@Path("/product")
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getProducts()
+	{
+		StringBuilder stringBuilder = new StringBuilder();
+		List<Product> products = hw2dao.getProducts();
+		if(products.isEmpty())
+		{
+			return "There Are Currently No Products In The Database";
+		}
+		for (Product product : products) {
+			stringBuilder.append(product.toString());
+		}
+		return stringBuilder.toString();
+	}
+	
 	
 	@Path("/orders")
 	@GET
