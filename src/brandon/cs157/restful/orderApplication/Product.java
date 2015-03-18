@@ -15,7 +15,7 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name="Product.retrieveAllProducts", query="from Product"),
-    @NamedQuery(name="Product.retrieveProductById", query="from Product where id = :id")
+    @NamedQuery(name="Product.retrieveProductById", query="from Product where id = :id and CustomerOrder_id = NULL")
 })
 public class Product {
 

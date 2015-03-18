@@ -103,13 +103,19 @@ public class Restful
 	@Produces(MediaType.TEXT_PLAIN)
 	public String purchaseProduct(@PathParam("customerOrderId")String customerOrderId, @PathParam("productId")String productId)
 	{
+		try
+		{
+			int product_id = Integer.parseInt(productId);
+			int customer_order_id = Integer.parseInt(customerOrderId);
+			Product product = hw2dao.getProductById(product_id);
+			hw2dao.updateCustomerOrder(customer_order_id, product);
 		
-		int product_id = Integer.parseInt(productId);
-		int customer_order_id = Integer.parseInt(customerOrderId);
-		Product product = hw2dao.getProductById(product_id);
-		hw2dao.updateCustomerOrder(customer_order_id, product);
+			return "Product " + product.getName() + " Has Been Added To Customer Order: " + customerOrderId;
+		}catch (Exception e)
+		{
+			return "Sorry All Out Of That Product";
+		}
 		
-		return "Product " + product.getName() + " Has Been Added To Customer Order: " + customerOrderId;
 	}
 	
 	@Path("/order")
