@@ -2,19 +2,10 @@ package brandon.cs157.restful.orderApplication;
 
 import java.util.List;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-
-@Path("/store")
-public class Restful 
-{
-	
+public class OrderEntryService {
 	private static final Hw2DAO hw2dao = new Hw2DAO();
 	
-	@Path("/customer/{customerName}")
-	@POST
-	@Produces(MediaType.TEXT_PLAIN)
-	public String addCustomer(@PathParam("customerName") String customerName)
+	public String addCustomer(String customerName)
 	{
 		Customer customer = new Customer();
 		customer.setName(customerName);
@@ -22,12 +13,8 @@ public class Restful
 		return "Customer " + customerName + " Has Been Added To The Database";
 	}
 	
-	@Path("/customer")
-	@GET
-	@Produces(MediaType.TEXT_PLAIN)
 	public String getCustomers()
 	{
-		
 		StringBuilder stringBuilder =  new StringBuilder();
 		List<Customer> customers = hw2dao.getCustomers();
 		if(customers.isEmpty())
@@ -40,10 +27,7 @@ public class Restful
 		return stringBuilder.toString();
 	}
 	
-	@Path("/products/{productName}/{productPrice}")
-	@POST
-	@Produces(MediaType.TEXT_PLAIN)
-	public String addProduct(@PathParam("productName")String productName, @PathParam("productPrice") String productPrice)
+	public String addProduct(String productName, String productPrice)
 	{
 		double price = Double.parseDouble(productPrice);
 		Product product = new Product();
@@ -54,9 +38,6 @@ public class Restful
 		return "Product: " + productName + " For $" + productPrice +" Has Been Added To The Database";
 	}
 	
-	@Path("/products")
-	@GET
-	@Produces(MediaType.TEXT_PLAIN)
 	public String getProducts()
 	{
 		StringBuilder stringBuilder = new StringBuilder();
@@ -72,22 +53,17 @@ public class Restful
 		return stringBuilder.toString();
 	}
 	
-	@Path("/products/{productId}/{newProductPrice}")
-	@PUT
-	@Produces(MediaType.TEXT_PLAIN)
-	public String updateProductPrice(@PathParam("productId") String productId, @PathParam("newProductPrice") String newProductPrice)
+	public String updateProductPrice(String productId, String productPrice)
 	{
 		int id = Integer.parseInt(productId);
-		double price = Double.parseDouble(newProductPrice);
+		double price = Double.parseDouble(productPrice);
 		hw2dao.updateProductPrice(id, price);
 		hw2dao.updateCustomerOrderTotal();
-		return "Updated Product: " + productId + " Price To: $" + newProductPrice;
+		return "Updated Product: " + productId + " Price To: $" + productPrice;
 	}
 	
-	@Path("/order/{customerName}/{customerId}")
-	@POST
-	@Produces(MediaType.TEXT_PLAIN)
-	public String addOrder(@PathParam("customerName") String customerName, @PathParam("customerId") String customerId)
+	
+	public String addOrder(String customerName, String customerId)
 	{
 		int id = Integer.parseInt(customerId);
 		Customer customer = hw2dao.getCustomerByNameAndId(customerName, id);
@@ -98,10 +74,7 @@ public class Restful
 		return "Order For Customer " + customerName + " Has Been Created";
 	}
 	
-	@Path("/purchase/{customerOrderId}/{productId}")
-	@POST
-	@Produces(MediaType.TEXT_PLAIN)
-	public String purchaseProduct(@PathParam("customerOrderId")String customerOrderId, @PathParam("productId")String productId)
+	public String purchaseProduct(String customerOrderId, String productId)
 	{
 		try
 		{
@@ -115,15 +88,10 @@ public class Restful
 		{
 			return "Sorry All Out Of That Product";
 		}
-		
 	}
 	
-	@Path("/order")
-	@GET
-	@Produces(MediaType.TEXT_PLAIN)
 	public String getAllOrders()
 	{
-		
 		StringBuilder stringBuilder = new StringBuilder();
 		
 		List<CustomerOrder> customerOrders = hw2dao.getCustomerOrders();
@@ -141,12 +109,9 @@ public class Restful
 		return stringBuilder.toString();
 	}
 	
-	@Path("/order/{customerOrderId}")
-	@GET
-	@Produces(MediaType.TEXT_PLAIN)
-	public String getOrderById(@PathParam("customerOrderId") String customerOrderId)
+	public String getOrderById(String customerOrderId)
 	{
-		
+
 		int id = Integer.parseInt(customerOrderId);
 		StringBuilder stringBuilder = new StringBuilder();
 		
@@ -155,16 +120,11 @@ public class Restful
 		return customerOrder.toString();
 	}
 	
-	@Path("/order/{customerOrderId}")
-	@DELETE
-	@Produces(MediaType.TEXT_PLAIN)
-	public String deleteCustomerOrder(@PathParam("customerOrderId")String customerOrderId)
+	public String deleteCustomerOrder(String customerOrderId)
 	{
 		int id = Integer.parseInt(customerOrderId);
 		hw2dao.deleteOrders(id);
 		return "Customer Order " + customerOrderId + " Has been Deleted";
 	}
-	
-	
 	
 }

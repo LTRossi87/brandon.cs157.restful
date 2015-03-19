@@ -166,10 +166,9 @@ public class Hw2DAO implements DAO {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		Query query;
-        query = session.getNamedQuery("Product.retrieveProductById");
+        query = session.getNamedQuery("Product.updatePrice");
         query.setInteger("id", productId);
         Product product = (Product) query.uniqueResult();
-        
         product.setPrice(price);
         
         session.update(product);

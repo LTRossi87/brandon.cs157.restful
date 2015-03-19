@@ -75,6 +75,7 @@ public class CustomerOrder {
 	
 	public String toString()
 	{
+		double total = 0;
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("Customer Order For ");
 		stringBuilder.append(this.customer.getName());
@@ -89,6 +90,7 @@ public class CustomerOrder {
 			
 			for (Product product : products) 
 			{
+				total += product.getPrice();
 				stringBuilder.append("     " + product.toStringForCustomerOrders());
 				
 			}
@@ -100,7 +102,7 @@ public class CustomerOrder {
 		
 		stringBuilder.append("\n");
 		stringBuilder.append("Total Price: ");
-		stringBuilder.append(this.getTotal());
+		stringBuilder.append(total);
 		stringBuilder.append("\n");
 		return stringBuilder.toString();
 		
